@@ -13,13 +13,6 @@ const connectDB = new sequelize(
     }
 );
 
-console.log(
-    process.env.DATABASE_NAME,
-    process.env.DATABASE_USERNAME,
-    process.env.DATABASE_PASSWORD,
-    process.env.DATABASE_HOST
-);
-
 const launchDB = async () => {
     try {
         await connectDB.authenticate();
