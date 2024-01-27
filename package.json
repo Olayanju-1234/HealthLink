@@ -1,0 +1,32 @@
+{
+  "name": "healthlink",
+  "version": "1.0.0",
+  "description": "HealthLink is a digital social platform that connects users to therapists and psychologists with the aid of AI assistant tools.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olayanju-1234/HealthLink.git"
+  },
+  "author": "Joseph, Success, Meshach",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Olayanju-1234/HealthLink/issues"
+  },
+  "homepage": "https://github.com/Olayanju-1234/HealthLink#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.9.0",
+    "sequelize": "^6.35.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
