@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const router = require('./routes');
+const { AuthRouter } = require('./routes/auth');
 
 const app = express();
 
@@ -30,6 +31,8 @@ app.get('/', (req, res) => {
     });
 });
 
+
+app.use('/api/auth', AuthRouter);
 // router(app);
 
 // Unknown routes
