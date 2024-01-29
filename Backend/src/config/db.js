@@ -1,9 +1,9 @@
-const sequelize = require('sequelize');
+const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const connectDB = new sequelize(
+const DB = new Sequelize(
     process.env.DATABASE_NAME,
     process.env.DATABASE_USERNAME,
     process.env.DATABASE_PASSWORD,
@@ -15,7 +15,7 @@ const connectDB = new sequelize(
 
 const launchDB = async () => {
     try {
-        await connectDB.authenticate();
+        await DB.authenticate();
         console.log('Connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
@@ -23,4 +23,4 @@ const launchDB = async () => {
     }
 };
 
-module.exports = launchDB;
+module.exports = { launchDB, DB };

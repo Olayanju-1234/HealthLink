@@ -1,8 +1,8 @@
 const app = require('./app');
-const connectDB = require('./config/db');
+const { launchDB } = require('./config/db');
 
 // Connect to database
-connectDB()
+launchDB()
     .then(() => {
         // Start server
         app.listen(process.env.PORT, () => {
