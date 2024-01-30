@@ -2,8 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const router = require('./routes');
 const { AuthRouter } = require('./routes/auth');
+const { UserRouter } = require('./routes/user');
 
 const app = express();
 
@@ -32,6 +32,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', AuthRouter);
+app.use('/api/user', UserRouter);
 
 // Unknown routes
 app.use((req, res) => {
