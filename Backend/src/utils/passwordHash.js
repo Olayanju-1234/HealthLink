@@ -10,8 +10,8 @@ const comparePassword = (password, hashedPassword) => {
 };
 
 // generate 6 digit activation token using crypt
-const generateActivationToken = (length) => {
-    const token = crypto.randomBytes(length).toString('hex');
+const generateActivationToken = () => {
+    const token = Math.floor(100000 + Math.random() * 900000);
     return token;
 };
 

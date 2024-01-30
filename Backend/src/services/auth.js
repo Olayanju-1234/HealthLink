@@ -50,8 +50,8 @@ class AuthService {
             }
         }
 
-        // generate activation token 6 digit using bcrypt
-        const activation_token = generateActivationToken(6);
+        // generate activation token
+        const activation_token = generateActivationToken();
 
         // hash password
         const hashedPassword = hashPassword(data.password);
