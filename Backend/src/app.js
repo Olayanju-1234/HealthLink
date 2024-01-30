@@ -31,9 +31,7 @@ app.get('/', (req, res) => {
     });
 });
 
-
 app.use('/api/auth', AuthRouter);
-// router(app);
 
 // Unknown routes
 app.use((req, res) => {
