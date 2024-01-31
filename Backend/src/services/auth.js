@@ -87,7 +87,7 @@ class AuthService {
 
     // check if user exists
     const user = await UserModel.findOne({
-      where: { email: data.email}
+       email: data.email
     });
     if (!user) {
       throw new Error("User does not exist")
