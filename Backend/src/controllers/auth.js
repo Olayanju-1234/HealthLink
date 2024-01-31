@@ -26,6 +26,19 @@ async activate (req, res) {
     }
 }
 
+
+async userLogin (req, res) {
+    try{
+    const user = await authService.login(req.body)
+    return res.status(201).json({ message: 'Login successful' })
+    } catch (error){
+        console.error(error);
+
+        return res.status(500).json({ message: error.message || 'Internal Server Error' })
+    }
+}
+
+
 };
 
 module.exports = AuthController;
