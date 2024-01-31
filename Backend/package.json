@@ -4,7 +4,7 @@
   "description": "HealthLink is a digital social platform that connects users to therapists and psychologists with the aid of AI assistant tools.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "start": "node src/server.js",
     "dev": "nodemon src/server.js"
   },
   "repository": {
