@@ -34,15 +34,22 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false,
   },
-  country: String,
+  country: {
+    type: String,
+    required: true,
+  },
   account_type: {
     type: String,
     enum: ['client', 'therapist'],
     default: 'client'
   },
-  activationToken: String,
+  activationToken: {
+    type: String,
+    select: false
+  },
   isVerified: {
     type: Boolean,
     default: false

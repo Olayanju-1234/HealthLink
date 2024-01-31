@@ -7,7 +7,15 @@ const getUsersService = new GetUsersService();
 class UserController {
     async allUsers(req, res) {
         try {
-            const users = await getUsersService.AllUsers();
+            const { limit = 10, skip = 0, sort = 'createdBy', order = 'asc', ...filters  } = req.query;
+
+            const users = await getUsersService.AllUsers(
+                limit,
+                skip,
+                sort,
+                order,
+                filters
+            );
 
             return successResponse(
                 res,
@@ -33,7 +41,7 @@ class UserController {
             return successResponse(
                 res,
                 StatusCodes.OK,
-                'Users retrieved successfully',
+                'User retrieved successfully',
                 user
             );
         } catch (error) {
@@ -47,17 +55,50 @@ class UserController {
         }
     }
 
-    async userByAccountType(req, res) {
+    async getAllClients(req, res) {
         try {
-            const user = await getUsersService.ByAccountType(
-                req.params.account_type
+            const { limit = 10, skip = 0, sort = 'createdBy', order = 'asc' } = req.query;
+
+            const clients = await getUsersService.AllClients(
+                limit,
+                skip,
+                sort,
+                order
             );
 
             return successResponse(
                 res,
                 StatusCodes.OK,
-                'Users retrieved successfully',
-                user
+                'Clients retrieved successfully',
+                clients
+            );
+        } catch (error) {
+            console.error(error);
+
+            return errorResponse(
+                res,
+                StatusCodes.INTERNAL_SERVER_ERROR,
+                error.message || 'Internal Server Error'
+            );
+        }
+}
+
+    async getAllTherapists(req, res) {
+        try {
+            const { limit = 10, skip = 0, sort = 'createdBy', order = 'asc' } = req.query;
+
+            const therapists = await getUsersService.AllTherapists(
+                limit,
+                skip,
+                sort,
+                order
+            );
+
+            return successResponse(
+                res,
+                StatusCodes.OK,
+                'Therapists retrieved successfully',
+                therapists
             );
         } catch (error) {
             console.error(error);

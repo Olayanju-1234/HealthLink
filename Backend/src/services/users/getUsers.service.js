@@ -1,8 +1,17 @@
 const User = require('../../models/user.model');
 
 class GetUsersService {
-    async AllUsers() {
-        const users = await User.find();
+    async AllUsers(
+        limit,
+        skip,
+        sortBy = 'createdAt',
+        orderBy = 'asc',
+        filters = {}
+    ) {
+        const users = await User.find(filters)
+            .limit(limit)
+            .skip(skip)
+            .sort({ [sortBy]: orderBy });
         return users;
     }
 
@@ -11,9 +20,20 @@ class GetUsersService {
         return user;
     }
 
-    async ByAccountType(accountType) {
-        const users = await User.find({ accountType: accountType });
-        return users;
+    async AllClients(limit, skip, sortBy = 'createdAt', orderBy = 'asc') {
+        const clients = await User.find({ account_type: 'client' })
+            .limit(limit)
+            .skip(skip)
+            .sort({ [sortBy]: orderBy });
+        return clients;
+    }
+
+    async AllTherapists(limit, skip, sortBy = 'createdAt', orderBy = 'asc') {
+        const therapists = await User.find({ account_type: 'therapist' })
+            .limit(limit)
+            .skip(skip)
+            .sort({ [sortBy]: orderBy });
+        return therapists;
     }
 }
 
