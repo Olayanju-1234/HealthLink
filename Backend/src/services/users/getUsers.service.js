@@ -1,34 +1,39 @@
-const { UserModel } = require('../../models/userModel');
+const User = require('../../models/user.model');
 
 class GetUsersService {
-    async AllUsers() {
-        const users = await UserModel.findAll({
-            raw: true,
-        });
-
+    async AllUsers(
+        limit,
+        skip,
+        sortBy = 'createdAt',
+        orderBy = 'asc',
+        filters = {}
+    ) {
+        const users = await User.find(filters)
+            .limit(limit)
+            .skip(skip)
+            .sort({ [sortBy]: orderBy });
         return users;
     }
 
     async ById(id) {
-        const user = await UserModel.findOne({
-            where: {
-                id: id,
-            },
-            raw: true,
-        });
-
+        const user = await User.findById(id);
         return user;
     }
 
-    async ByAccountType(accountType) {
-        const user = await UserModel.findOne({
-            where: {
-                account_type: accountType,
-            },
-            raw: true,
-        });
+    async AllClients(limit, skip, sortBy = 'createdAt', orderBy = 'asc') {
+        const clients = await User.find({ account_type: 'client' })
+            .limit(limit)
+            .skip(skip)
+            .sort({ [sortBy]: orderBy });
+        return clients;
+    }
 
-        return user;
+    async AllTherapists(limit, skip, sortBy = 'createdAt', orderBy = 'asc') {
+        const therapists = await User.find({ account_type: 'therapist' })
+            .limit(limit)
+            .skip(skip)
+            .sort({ [sortBy]: orderBy });
+        return therapists;
     }
 }
 

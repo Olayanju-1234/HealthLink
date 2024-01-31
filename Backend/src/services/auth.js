@@ -1,7 +1,6 @@
-const { Op } = require('sequelize');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET, JWT_EXPIRE } = require('../config/index');
-const { UserModel } = require('../models/userModel');
+const User = require('../models/user.model');
 const { sendRegistrationMail } = require('./email');
 const {
     generateActivationToken,
@@ -11,7 +10,7 @@ const {
 
 class AuthService {
     async getSignedJwtToken(user) {
-        return jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+        return jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
             expiresIn: JWT_EXPIRE,
         });
     }
@@ -30,34 +29,30 @@ class AuthService {
             throw new Error('Please fill all necessary fields');
         }
 
-        // check if user exist
-
-        const checkUser = await UserModel.findOne({
-            where: {
-                [Op.or]: [
-                    { email: data.email },
-                    { phone_number: data.phone_number },
-                ],
-            },
-            raw: true,
+        // check if user exists
+        const checkUser = await User.findOne({
+            $or: [
+                { email: data.email },
+                { phone_number: data.phone_number },
+            ],
         });
 
         if (checkUser) {
             if (checkUser.email == data.email) {
-                throw new Error('Email Already Exist');
+                throw new Error('Email Already Exists');
             } else if (checkUser.phone_number == data.phone_number) {
-                throw new Error('Phone Number Already Exist');
+                throw new Error('Phone Number Already Exists');
             }
         }
 
         // generate activation token
-        const activation_token = generateActivationToken();
+        const activationToken = generateActivationToken();
 
         // hash password
         const hashedPassword = hashPassword(data.password);
 
-        //  create user
-        await UserModel.create({
+        // create user
+        await User.create({
             first_name: data.first_name,
             last_name: data.last_name,
             email: data.email,
@@ -65,25 +60,22 @@ class AuthService {
             password: hashedPassword,
             account_type: data.account_type,
             country: data.country,
-            activation_token,
+            activationToken: activationToken,
         });
 
-        //  send activation email
-        await sendRegistrationMail(data.email, activation_token);
+        // send activation email
+        await sendRegistrationMail(data.email, activationToken);
     }
 
     async activate(token) {
-        const user = await UserModel.findOne({
-            where: { activation_token: token },
-        });
+        const user = await User.findOneAndUpdate(
+            { activationToken: token },
+            { $set: { isVerified: true, activationToken: null } }
+        );
 
         if (!user) {
             throw new Error('Invalid activation token');
         }
-
-        user.is_verified = true;
-        user.activation_token = null;
-        await user.save();
     }
 
   async login(data) {

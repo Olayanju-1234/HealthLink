@@ -6,8 +6,9 @@ const userController = new UserController();
 const router = Router();
 
 router.get('/', userController.allUsers);
-router.get('/:id', userController.userById);
-router.get('/:account_type', userController.userByAccountType);
+router.get('/profile/:id', userController.userById);
+router.get('/clients', userController.getAllClients);
+router.get('/therapists', userController.getAllTherapists);
 
 const UserRouter = router;
 
