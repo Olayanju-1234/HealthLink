@@ -77,6 +77,30 @@ class AuthService {
             throw new Error('Invalid activation token');
         }
     }
+
+  async login(data) {
+    // validate user input
+    if (!data.email && !data.password){
+      throw new Error('Please enter the necessary fields')
+
+    }
+
+    // check if user exists
+    const user = await UserModel.findOne({
+       email: data.email
+    });
+    if (!user) {
+      throw new Error("User does not exist")
+    }
+
+    // compare user password against hashed password
+    const userPassword = await (data.password, user.password);
+    if (user && userPassword){
+      // generate token
+      const token = this.getSignedJwtToken(user);
+       return { user, token}
+    }
+  }
 }
 
 module.exports = AuthService;
