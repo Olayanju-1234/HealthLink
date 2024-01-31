@@ -1,34 +1,19 @@
-const { UserModel } = require('../../models/userModel');
+const User = require('../../models/user.model');
 
 class GetUsersService {
     async AllUsers() {
-        const users = await UserModel.findAll({
-            raw: true,
-        });
-
+        const users = await User.find();
         return users;
     }
 
     async ById(id) {
-        const user = await UserModel.findOne({
-            where: {
-                id: id,
-            },
-            raw: true,
-        });
-
+        const user = await User.findById(id);
         return user;
     }
 
     async ByAccountType(accountType) {
-        const user = await UserModel.findOne({
-            where: {
-                account_type: accountType,
-            },
-            raw: true,
-        });
-
-        return user;
+        const users = await User.find({ accountType: accountType });
+        return users;
     }
 }
 
