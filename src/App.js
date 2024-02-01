@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from 'react'
+import "./App.css"
+import { Route, Routes } from "react-router-dom";
+import Aichat from "./components/pages/Aichat"
+import Aiintro from './components/pages/Aiintro';
+import TherapistList from './components/pages/Therapistlist';
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        <Route path="ai-intro" element={<Aiintro />} />
+        <Route path="ai-intro/ai-chat" element={<Aichat />} />
+        <Route path="therapist-list" element={<TherapistList />} />
+      </Routes>
     </div>
   );
 }
 
-export default App;
+export default App
