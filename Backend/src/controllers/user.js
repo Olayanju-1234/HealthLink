@@ -7,8 +7,13 @@ const getUsersService = new GetUsersService();
 class UserController {
     async allUsers(req, res) {
         try {
-            const { limit = 10, skip = 0, sort = 'createdBy', order = 'asc', ...filters  } = req.query;
-
+            let { limit = 10, skip = 0, sort = 'createdBy', order = 'asc', ...filters  } = req.query;
+    
+            // Convert all filter values to lowercase
+            filters = Object.fromEntries(
+                Object.entries(filters).map(([key, value]) => [key, value.toLowerCase()])
+            );
+    
             const users = await getUsersService.AllUsers(
                 limit,
                 skip,
@@ -16,7 +21,7 @@ class UserController {
                 order,
                 filters
             );
-
+    
             return successResponse(
                 res,
                 StatusCodes.OK,
@@ -25,7 +30,7 @@ class UserController {
             );
         } catch (error) {
             console.error(error);
-
+    
             return errorResponse(
                 res,
                 StatusCodes.INTERNAL_SERVER_ERROR,
@@ -33,6 +38,7 @@ class UserController {
             );
         }
     }
+    
 
     async userById(req, res) {
         try {
