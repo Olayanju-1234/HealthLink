@@ -17,7 +17,7 @@ let whitelist = [
 const whitelistUrls = whitelist;
 
 if (process.env.NODE_ENV !== 'production') {
-    whitelist = [...whitelist, 'http://localhost:3000'];
+    whitelist = [...whitelist, 'http://localhost:3000', 'http://localhost:3001'];
 }
 
 const corsOptions = {
