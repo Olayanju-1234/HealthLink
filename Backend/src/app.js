@@ -14,7 +14,7 @@ let whitelist = [
     'https://awful-gown-foal.cyclic.app',
 ];
 
-export const whitelistUrls = whitelist;
+const whitelistUrls = whitelist;
 
 if (process.env.NODE_ENV !== 'production') {
     whitelist = [...whitelist, 'http://localhost:3000'];
