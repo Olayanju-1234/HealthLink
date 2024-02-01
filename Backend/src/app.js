@@ -7,9 +7,27 @@ const { UserRouter } = require('./routes/user');
 
 const app = express();
 
-// cors
-let corsOptions = {
-    origin: 'http://localhost:3000',
+// ** CORS **
+let whitelist = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://awful-gown-foal.cyclic.app',
+];
+
+export const whitelistUrls = whitelist;
+
+if (process.env.NODE_ENV !== 'production') {
+    whitelist = [...whitelist, 'http://localhost:3000'];
+}
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback('Not allowed by CORS', false);
+        }
+    },
 };
 
 app.use(cors(corsOptions));
