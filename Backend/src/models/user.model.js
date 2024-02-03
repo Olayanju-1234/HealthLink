@@ -11,6 +11,14 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     required: true
   },
+  title: {
+    type: String,
+    required: true
+  },
+  username: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     unique: true,
@@ -41,6 +49,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  postal_code: {
+    type: String,
+  },
   account_type: {
     type: String,
     enum: ['client', 'therapist'],
@@ -53,6 +70,9 @@ const userSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
     default: false
+  },
+  specialty: {
+    type: String,
   },
   passwordResetToken: String,
   passwordResetTokenExpiration: Date

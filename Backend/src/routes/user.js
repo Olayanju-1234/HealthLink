@@ -9,6 +9,9 @@ router.get('/', userController.allUsers);
 router.get('/profile/:id', userController.userById);
 router.get('/clients', userController.getAllClients);
 router.get('/therapists', userController.getAllTherapists);
+router.put('/client-profile/:id', userController.setClientProfile);
+router.put('/therapist-profile/:id', userController.setTherapistProfile);
+router.get('/profile/:id', userController.getProfile);
 
 const UserRouter = router;
 
