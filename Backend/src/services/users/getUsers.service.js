@@ -8,12 +8,21 @@ class GetUsersService {
         orderBy = 'asc',
         filters = {}
     ) {
+        // Convert all filter values to lowercase
+        filters = Object.fromEntries(
+            Object.entries(filters).map(([key, value]) => [
+                key,
+                value.toLowerCase(),
+            ])
+        );
+    
         const users = await User.find(filters)
             .limit(limit)
             .skip(skip)
             .sort({ [sortBy]: orderBy });
         return users;
     }
+    
 
     async ById(id) {
         const user = await User.findById(id);

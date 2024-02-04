@@ -15,7 +15,7 @@ class UserController {
                 order = 'asc',
                 ...filters
             } = req.query;
-
+    
             // Convert all filter values to lowercase
             filters = Object.fromEntries(
                 Object.entries(filters).map(([key, value]) => [
@@ -23,7 +23,7 @@ class UserController {
                     value.toLowerCase(),
                 ])
             );
-
+    
             const users = await getUsersService.AllUsers(
                 limit,
                 skip,
@@ -31,7 +31,7 @@ class UserController {
                 order,
                 filters
             );
-
+    
             return successResponse(
                 res,
                 StatusCodes.OK,
@@ -40,7 +40,7 @@ class UserController {
             );
         } catch (error) {
             console.error(error);
-
+    
             return errorResponse(
                 res,
                 StatusCodes.INTERNAL_SERVER_ERROR,
