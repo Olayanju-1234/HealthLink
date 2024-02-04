@@ -31,7 +31,6 @@ class UserController {
                 skip,
                 sort,
                 order,
-               
                 filters
             );
     
