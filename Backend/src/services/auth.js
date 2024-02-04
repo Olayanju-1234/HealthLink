@@ -18,10 +18,7 @@ class AuthService {
     async register(data) {
         // validate user input
         if (
-            !data.first_name ||
-            !data.last_name ||
             !data.email ||
-            !data.phone_number ||
             !data.password ||
             !data.account_type ||
             !data.country
@@ -31,19 +28,15 @@ class AuthService {
 
         // check if user exists
         const checkUser = await User.findOne({
-            $or: [
-                { email: data.email },
-                { phone_number: data.phone_number },
-            ],
-        });
+            email: data.email,
+        })
 
         if (checkUser) {
             if (checkUser.email == data.email) {
                 throw new Error('Email Already Exists');
-            } else if (checkUser.phone_number == data.phone_number) {
-                throw new Error('Phone Number Already Exists');
             }
         }
+
 
         // generate activation token
         const activationToken = generateActivationToken();
@@ -53,10 +46,7 @@ class AuthService {
 
         // create user
         await User.create({
-            first_name: data.first_name,
-            last_name: data.last_name,
             email: data.email,
-            phone_number: data.phone_number,
             password: hashedPassword,
             account_type: data.account_type,
             country: data.country,
