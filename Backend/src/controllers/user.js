@@ -110,13 +110,16 @@ class UserController {
                 skip = 0,
                 sort = 'createdBy',
                 order = 'asc',
+                specialty
+
             } = req.query;
 
             const therapists = await getUsersService.AllTherapists(
                 limit,
                 skip,
                 sort,
-                order
+                order,
+                specialty
             );
 
             return successResponse(

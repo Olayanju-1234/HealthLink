@@ -37,8 +37,14 @@ class GetUsersService {
         return clients;
     }
 
-    async AllTherapists(limit, skip, sortBy = 'createdAt', orderBy = 'asc') {
-        const therapists = await User.find({ account_type: 'therapist' })
+    async AllTherapists(limit, skip, sortBy = 'createdAt', orderBy = 'asc', specialty) {
+
+        const query = { account_type: 'therapist '}
+
+        if (speciality) {
+            query.specialty = specialty
+        }
+        const therapists = await User.find(query)
             .limit(limit)
             .skip(skip)
             .sort({ [sortBy]: orderBy });
