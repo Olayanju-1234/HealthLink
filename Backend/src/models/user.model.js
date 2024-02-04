@@ -9,9 +9,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         minlength: 2,
     },
-    title: {
-        type: String,
-    },
     username: {
         type: String,
     },
