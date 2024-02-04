@@ -1,4 +1,4 @@
-const app = require('./app');
+const {app} = require('./app');
 const { launchDB } = require('./config/db');
 
 // Connect to database
