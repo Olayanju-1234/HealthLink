@@ -41,7 +41,7 @@ class GetUsersService {
 
         const query = { account_type: 'therapist '}
 
-        if (speciality) {
+        if (specialty) {
             query.specialty = specialty
         }
         const therapists = await User.find(query)
