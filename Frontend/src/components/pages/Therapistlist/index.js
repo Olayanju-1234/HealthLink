@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useGetAllTherapists } from "../../../hooks";
+import "../../../styles/therapists.css";
 
 const TherapistList = () => {
   const [therapists, isLoading] = useGetAllTherapists();
@@ -11,7 +12,7 @@ const TherapistList = () => {
     try {
       setSearchLoading(true);
       const response = await fetch(
-        `https://awful-gown-foal.cyclic.app/api/user?first_name=${searchQuery}`
+        `https://awful-gown-foal.cyclic.app/api/user?specialty=${searchQuery}`
       );
 
       if (!response.ok) {
@@ -30,33 +31,65 @@ const TherapistList = () => {
   }, [searchQuery]);
 
   return (
-    <div>
-      <section>
-        <h1>See all our therapists</h1>
-        <ul>
-          {searchResults.length > 0 ? (
-            searchResults.map((therapist) => (
-              <li key={therapist._id}>
-                {therapist.first_name} {therapist.last_name}
-              </li>
-            ))
-          ) : therapists ? (
-            therapists.map((therapist) => (
-              <li key={therapist._id}>
-                {therapist.first_name} {therapist.last_name}
-              </li>
-            ))
-          ) : (
-            <p>No therapists available</p>
-          )}
-          {(isLoading || searchLoading) && <p>Loading...</p>}
-        </ul>
-      </section>
-
-      <div>
-        <input type="text" onChange={(e) => setSearchQuery(e.target.value)} />
-        <button onClick={handleSearch}>Search</button>
+    <div className="therapist-list">
+      <div className="therapist-list__search">
+        <h1 className="therapist-list__title">Available Therapists</h1>
+        <div>
+          <input
+            type="text"
+            className="therapist-list__search-input"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Filter by Specialty"
+          />
+          <button
+            className="therapist-list__search-button"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+        </div>
       </div>
+      <section className="therapist-list__section">
+        {searchResults.length > 0 || therapists.length > 0 ? (
+          <table className="therapist-list__table">
+            <thead className="therapist-list__table-head">
+              <tr>
+                <th>Name</th>
+                <th>Specialty</th>
+                <th>Country</th>
+              </tr>
+            </thead>
+            <tbody therapist-list__table-body>
+              {searchResults.length > 0
+                ? searchResults.map((therapist) => (
+                    <tr key={therapist._id} className="therapist-list__item">
+                      <td>
+                        {therapist.first_name} {therapist.last_name}
+                      </td>
+                      <td>{therapist.specialty}</td>
+                      
+                      <td>{therapist.country}</td>
+                    </tr>
+                  ))
+                : therapists.map((therapist) => (
+                    <tr key={therapist._id} className="therapist-list__item">
+                      <td>
+                        {therapist.first_name} {therapist.last_name}
+                      </td>
+                      <td>{therapist.specialty}</td>
+                   
+                      <td>{therapist.country}</td>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="therapist-list__empty">No therapists available</p>
+        )}
+        {(isLoading || searchLoading) && (
+          <p className="therapist-list__loading">Loading...</p>
+        )}
+      </section>
     </div>
   );
 };

@@ -1,0 +1,84 @@
+.therapist-list{
+    display: flex;
+    flex-direction: column;
+    background-color: #0d5d56;
+    height: 94vh;
+    padding: 20px;
+}
+.therapist-list__search{
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 10px;
+}
+.therapist-list__title{
+     color: black;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.therapist-list__search-input{
+    padding: 5px;
+    border-radius: 10px;
+   margin-right: 5px;
+}
+.therapist-list__search-button{
+    font-size: 12px;
+    padding: 5px 6px;
+    border-radius: 10px;
+}
+.therapist-list__section{
+    margin: 10px 5px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+.therapist-list__empty{
+     color: black;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.therapist-list__loading{
+     color: black;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.therapist-list__table{
+    font-size: 12px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+   
+}
+td{
+    border-radius: 10px;
+    text-align: center;
+    padding: 8px;
+    box-shadow: black;
+    font-size: 13px;
+    box-shadow: 2px 2px 4px #000000;
+    border-color: transparent;
+    border-width: none;
+}
+th{
+     padding: 8px;
+    
+     border-color: transparent;
+    border-right: none;
+    
+  
+}
+
+
+.therapist-list__table-head{
+    background-color: #0d5d56;
+    border-radius: 10px;
+    color: white;
+    font-size: 26px;
+   
+    
+}

@@ -1,0 +1,10 @@
+.Aichat__container {
+  position: relative;
+  margin: 20px;
+  height: 93vh;
+  width: 97vw;
+  
+}
+.Aichat__interface{
+   background-color: #0d5d56;
+}

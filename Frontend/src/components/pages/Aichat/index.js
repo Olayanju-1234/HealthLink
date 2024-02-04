@@ -8,12 +8,14 @@ import {
   MessageInput,
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
+import "../../../styles/Aichat.css";
 
-const API_KEY = "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";
-// "Explain things like you would to a 10 year old learning how to code."
+const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+
+
 
 const systemMessage = {
-  //  Explain things like you're talking to a software professional with 5 years of experience.
+  // Instruct the Ai how to interact
   role: "system",
   content:
     "Provide emotional support to individuals and focus on helping individuals feel better like a therapist and friend",
@@ -22,9 +24,9 @@ const systemMessage = {
 function Aichat() {
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm ChatGPT! Ask me anything!",
+      message: "Hello, How may I help you?",
       sentTime: "just now",
-      sender: "ChatGPT",
+      sender: "Healthlink-Ai",
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
@@ -54,7 +56,7 @@ function Aichat() {
 
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
-      if (messageObject.sender === "ChatGPT") {
+      if (messageObject.sender === "Healthlink-Ai") {
         role = "assistant";
       } else {
         role = "user";
@@ -95,7 +97,7 @@ function Aichat() {
         ...chatMessages,
         {
           message: data.choices[0].message.content,
-          sender: "ChatGPT",
+          sender: "Healthlink-Ai",
         },
       ]);
     } catch (error) {
@@ -105,15 +107,15 @@ function Aichat() {
     }
   }
   return (
-    <div className="App">
-      <div style={{ position: "relative", height: "800px", width: "700px" }}>
+    <div className="Aichat__interface">
+      <div className="Aichat__container">
         <MainContainer>
           <ChatContainer>
             <MessageList
               scrollBehavior="smooth"
               typingIndicator={
                 isTyping ? (
-                  <TypingIndicator content="ChatGPT is typing" />
+                  <TypingIndicator content="Healthlink-Ai is typing" />
                 ) : null
               }
             >
