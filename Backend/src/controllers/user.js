@@ -13,16 +13,18 @@ class UserController {
                 skip = 0,
                 sort = 'createdBy',
                 order = 'asc',
-                ...filters
+                account_type,
+                specialty,
+                country
+               
             } = req.query;
     
             // Convert all filter values to lowercase
-            filters = Object.fromEntries(
-                Object.entries(filters).map(([key, value]) => [
-                    key,
-                    value.toLowerCase(),
-                ])
-            );
+             const filters = {
+                account_type: account_type && account_type.toLowerCase(),
+                specialty: specialty && specialty.toLowerCase(),
+                country: country && country.toLowerCase(),
+             }
     
             const users = await getUsersService.AllUsers(
                 limit,
@@ -110,13 +112,16 @@ class UserController {
                 skip = 0,
                 sort = 'createdBy',
                 order = 'asc',
+                specialty
+
             } = req.query;
 
             const therapists = await getUsersService.AllTherapists(
                 limit,
                 skip,
                 sort,
-                order
+                order,
+                specialty
             );
 
             return successResponse(
