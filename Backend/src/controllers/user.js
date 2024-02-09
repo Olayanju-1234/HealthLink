@@ -13,27 +13,21 @@ class UserController {
                 skip = 0,
                 sort = 'createdBy',
                 order = 'asc',
-                account_type,
-                specialty,
-                country
-               
+                filter,
             } = req.query;
-    
-            // Convert all filter values to lowercase
-             const filters = {
-                account_type: account_type && account_type.toLowerCase(),
-                specialty: specialty && specialty.toLowerCase(),
-                country: country && country.toLowerCase(),
-             }
-    
+
+            if (filter) {
+                filter = JSON.parse(filter);
+            }
+
             const users = await getUsersService.AllUsers(
                 limit,
                 skip,
                 sort,
                 order,
-                filters
+                filter
             );
-    
+
             return successResponse(
                 res,
                 StatusCodes.OK,
@@ -42,7 +36,7 @@ class UserController {
             );
         } catch (error) {
             console.error(error);
-    
+
             return errorResponse(
                 res,
                 StatusCodes.INTERNAL_SERVER_ERROR,
@@ -112,8 +106,7 @@ class UserController {
                 skip = 0,
                 sort = 'createdBy',
                 order = 'asc',
-                specialty
-
+                specialty,
             } = req.query;
 
             const therapists = await getUsersService.AllTherapists(
