@@ -59,8 +59,12 @@ class GetUsersService {
         const query = { account_type: 'therapist' };
 
         if (specialty) {
-            query.specialty = specialty;
+            // Convert specialty to lowercase for case-insensitive matching
+            const lowerCaseSpecialty = specialty.toLowerCase();
+            // Use the converted specialty in the query
+            query.specialty = { $regex: new RegExp(lowerCaseSpecialty, 'i') };
         }
+        
 
         const therapists = await User.find(query, 'first_name last_name specialty country')
             .limit(limit)
