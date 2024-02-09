@@ -210,21 +210,13 @@ class UserController {
 
     async availableTherapists(req, res) {
         try {
-            const {
-                limit = 10,
-                skip = 0,
-                sort = 'createdBy',
-                order = 'asc',
-                specialty,
-            } = req.query;
+            const { limit = 10, page = 1, specialty } = req.query;
 
-            const therapists = await getUsersService.AvailableTherapists(
+            const therapists = await getUsersService.AvailableTherapists({
                 limit,
-                skip,
-                sort,
-                order,
-                specialty
-            );
+                page,
+                specialty,
+            });
 
             return successResponse(
                 res,
