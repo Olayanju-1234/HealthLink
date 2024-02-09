@@ -62,7 +62,7 @@ class GetUsersService {
             .limit(limit)
             .skip(skip)
             .sort({ [sortBy]: orderBy })
-            .select('firstName lastName specialty');
+            .select('first_name last_name specialty');
         return therapists;
     }
 }
