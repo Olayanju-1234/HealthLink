@@ -15,14 +15,13 @@ class GetUsersService {
                 value.toLowerCase(),
             ])
         );
-    
+
         const users = await User.find(filters)
             .limit(limit)
             .skip(skip)
             .sort({ [sortBy]: orderBy });
         return users;
     }
-    
 
     async ById(id) {
         const user = await User.findById(id);
@@ -37,12 +36,17 @@ class GetUsersService {
         return clients;
     }
 
-    async AllTherapists(limit, skip, sortBy = 'createdAt', orderBy = 'asc', specialty) {
-
-        const query = { account_type: 'therapist'}
+    async AllTherapists(
+        limit,
+        skip,
+        sortBy = 'createdAt',
+        orderBy = 'asc',
+        specialty
+    ) {
+        const query = { account_type: 'therapist' };
 
         if (specialty) {
-            query.specialty = specialty
+            query.specialty = specialty;
         }
         const therapists = await User.find(query)
             .limit(limit)
@@ -55,14 +59,14 @@ class GetUsersService {
         const { limit, page } = options;
 
         const availableTherapists = await User.find({
-            account_type: 'therapist'
+            account_type: 'therapist',
         })
             .limit(limit)
             .skip(page * limit)
             .select('first_name last_name specialty');
+
         return availableTherapists;
     }
 }
-
 
 module.exports = GetUsersService;
