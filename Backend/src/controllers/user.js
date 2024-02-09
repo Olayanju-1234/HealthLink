@@ -213,11 +213,11 @@ class UserController {
             const { limit = 10, page = 1, specialty } = req.query;
 
             const therapists = await
-                getUsersService.AvailableTherapists({
-                    limit: parseInt(limit),
-                    page: parseInt(page),
+                getUsersService.AvailableTherapists(
                     specialty,
-                });
+                    parseInt(limit),
+                    parseInt(page)
+                );
 
             return successResponse(
                 res,

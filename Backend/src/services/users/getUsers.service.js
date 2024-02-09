@@ -55,17 +55,18 @@ class GetUsersService {
         return therapists;
     }
 
-    async AvailableTherapists(options) {
-        const { limit, page } = options;
+    async AvailableTherapists(specialty, limit = 10, page = 1) {
+        const query = { account_type: 'therapist' };
 
-        const availableTherapists = await User.find({
-            account_type: 'therapist',
-        })
+        if (specialty) {
+            query.specialty = specialty;
+        }
+
+        const therapists = await User.find(query, 'first_name last_name specialty')
             .limit(limit)
-            .skip(page * limit)
-            .select('first_name last_name specialty');
+            .skip((page - 1) * limit);
 
-        return availableTherapists;
+        return therapists;
     }
 }
 
