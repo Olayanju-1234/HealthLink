@@ -5,10 +5,7 @@ const CreateChat = async (chatData) => {
         throw new Error('Chat data is required');
     }
 
-    const newChat = await Chat.create(chatData).populate({
-        path: 'sender',
-        select: 'first_name last_name email _id',
-    });
+    const newChat = await Chat.create(chatData);
 
     return newChat;
 };

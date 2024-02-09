@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
 const { JWT_SECRET, JWT_EXPIRE } = require('../config/index');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 const { sendRegistrationMail } = require('./email');
 const {
@@ -9,12 +9,6 @@ const {
 } = require('../utils/passwordHash');
 
 class AuthService {
-    async getSignedJwtToken(user) {
-        return jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
-            expiresIn: JWT_EXPIRE,
-        });
-    }
-
     async register(data) {
         // validate user input
         if (
@@ -29,68 +23,90 @@ class AuthService {
         // check if user exists
         const checkUser = await User.findOne({
             email: data.email,
-        })
+        });
 
         if (checkUser) {
-            if (checkUser.email == data.email) {
-                throw new Error('Email Already Exists');
-            }
+            throw new Error('User already exists');
         }
-
 
         // generate activation token
         const activationToken = generateActivationToken();
+        data.activationToken = activationToken;
 
         // hash password
-        const hashedPassword = hashPassword(data.password);
+        data.password = hashPassword(data.password);
 
         // create user
-        await User.create({
-            email: data.email,
-            password: hashedPassword,
-            account_type: data.account_type,
-            country: data.country,
-            activationToken: activationToken,
-        });
+        const newUser = await User.create(data);
 
         // send activation email
         await sendRegistrationMail(data.email, activationToken);
+
+        const { password, ...user } = newUser.toJSON();
+
+        return user;
+    }
+
+    async login(data) {
+        const user = await User.findOne({ email: data.email }).select(
+            '+password'
+        );
+
+        if (!user || !comparePassword(data.password, user.password)) {
+            throw new Error('Invalid email or password');
+        }
+
+        if (!user.isVerified) {
+            throw new Error('User not verified');
+        }
+
+        const token = await this.getSignedJwtToken({
+            id: user._id,
+            isVerified: user.isVerified,
+            accountType: user.account_type,
+        });
+
+        const { password, ...userData } = user.toJSON();
+
+        return { ...userData, ...token, expiresIn: JWT_EXPIRE };
+    }
+
+    async getSignedJwtToken(payload) {
+        const accessToken = jwt.sign(payload, JWT_SECRET, {
+            expiresIn: JWT_EXPIRE,
+        });
+
+        const refreshToken = jwt.sign(payload, JWT_SECRET, {
+            expiresIn: '7d',
+        });
+
+        return { accessToken, refreshToken };
     }
 
     async activate(token) {
-        const user = await User.findOneAndUpdate(
-            { activationToken: token },
-            { $set: { isVerified: true, activationToken: null } }
-        );
+        const user = await User.findOne({ activationToken: token });
 
         if (!user) {
-            throw new Error('Invalid activation token');
+            throw new Error('Invalid token');
         }
-    }
 
-  async login(data) {
-    // validate user input
-    if (!data.email && !data.password){
-      throw new Error('Please enter the necessary fields')
+        user.isVerified = true;
+        user.activationToken = null;
 
-    }
+        await user.save();
 
-    // check if user exists
-    const user = await UserModel.findOne({
-       email: data.email
-    });
-    if (!user) {
-      throw new Error("User does not exist")
-    }
+        const Token = await this.getSignedJwtToken({
+            id: user._id,
+            isVerified: user.isVerified,
+            accountType: user.account_type,
+        });
 
-    // compare user password against hashed password
-    const userPassword = await (data.password, user.password);
-    if (user && userPassword){
-      // generate token
-      const token = this.getSignedJwtToken(user);
-       return { user, token}
+        return {
+            ...user.toJSON(),
+            ...Token,
+            expiresIn: JWT_EXPIRE,
+        };
     }
-  }
 }
 
 module.exports = AuthService;

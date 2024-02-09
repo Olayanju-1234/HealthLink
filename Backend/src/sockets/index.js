@@ -1,14 +1,30 @@
 const { whitelistUrls } = require('../app');
 const chat = require('./chat');
-const CreateChat = require('../services/chat/create.service');
+
+let io;
+const onlineUsers = new Map();
 
 function handleChat(io) {
-    io.on('connection', (socket) => {
-        console.log('User connected');
-        socket.on('join', (user) => {
-            console.log('User joined', user);
-            onlineUsers.set(user._id, socket.id);
+    io.on("connection", (socket) => {
+        console.log(`A user ${socket.id} connected`);
+        socket.on('online', ({ userId }) => {
+            console.log('User joined', userId);
+            
+            onlineUsers.set(socket.id, userId);
+
+            io.emit('online', Array.from(onlineUsers.keys()));
         });
+
+        socket.on('join',async (data) => {
+            const { username, room } = data;
+            
+            socket.join(room);
+
+            socket.broadcast.to(room).emit('message', { username, room });
+
+            socket.emit('message', { username, room });
+        }
+        );
 
         chat(socket, io);
     });

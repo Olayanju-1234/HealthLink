@@ -7,8 +7,8 @@ const authController = new AuthController();
 const router = express.Router();
 
 router.post('/signup', SignUpValidation, authController.userSignup)
-router.get('/activate/:token', authController.activate)
-router.get('/login', LoginValidation, authController.userLogin)
+router.get('/activate', authController.activate)
+router.post('/login', LoginValidation, authController.userLogin)
 const AuthRouter = router;
 
 module.exports = { AuthRouter };

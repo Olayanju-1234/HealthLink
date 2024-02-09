@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { AuthRouter } = require('./routes/auth');
 const { UserRouter } = require('./routes/user');
 const { PostRouter } = require('./routes/post.routes');
+const { ChatRouter } = require('./routes/chat.routes');
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', AuthRouter);
 app.use('/api/user', UserRouter);
 app.use('/api/post', PostRouter);
+app.use('/api/chat', ChatRouter);
 
 // Unknown routes
 app.use((req, res) => {
