@@ -50,6 +50,22 @@ class GetUsersService {
             .sort({ [sortBy]: orderBy });
         return therapists;
     }
+
+    async AvailableTherapists(limit, skip, sortBy = 'createdAt', orderBy = 'asc', specialty) {
+        const query = { account_type: 'therapist' }
+
+        if (specialty) {
+            query.specialty = specialty
+        }
+
+        const therapists = await User.find({ account_type: 'therapist' })
+            .limit(limit)
+            .skip(skip)
+            .sort({ [sortBy]: orderBy })
+            .select('firstName lastName specialty');
+        return therapists;
+    }
 }
+
 
 module.exports = GetUsersService;

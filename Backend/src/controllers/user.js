@@ -207,6 +207,41 @@ class UserController {
             );
         }
     }
+
+    async availableTherapists(req, res) {
+        try {
+            const {
+                limit = 10,
+                skip = 0,
+                sort = 'createdBy',
+                order = 'asc',
+                specialty,
+            } = req.query;
+
+            const therapists = await getUsersService.AvailableTherapists(
+                limit,
+                skip,
+                sort,
+                order,
+                specialty
+            );
+
+            return successResponse(
+                res,
+                StatusCodes.OK,
+                'Therapists retrieved successfully',
+                therapists
+            );
+        } catch (error) {
+            console.error(error);
+
+            return errorResponse(
+                res,
+                StatusCodes.INTERNAL_SERVER_ERROR,
+                error.message || 'Internal Server Error'
+            );
+        }
+    }
 }
 
 module.exports = UserController;

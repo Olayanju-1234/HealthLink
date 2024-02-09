@@ -12,6 +12,7 @@ router.get('/therapists', userController.getAllTherapists);
 router.put('/client-profile/:id', userController.setClientProfile);
 router.put('/therapist-profile/:id', userController.setTherapistProfile);
 router.get('/profile/:id', userController.getProfile);
+router.get('/available-therapists', userController.availableTherapists);
 
 const UserRouter = router;
 

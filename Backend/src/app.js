@@ -2,8 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const { AuthRouter } = require('./routes/auth');
-const { UserRouter } = require('./routes/user');
+const { AuthRouter } = require('./routes/auth.routes');
+const { UserRouter } = require('./routes/user.routes');
 const { PostRouter } = require('./routes/post.routes');
 const { ChatRouter } = require('./routes/chat.routes');
 
@@ -14,6 +14,7 @@ let whitelist = [
     'http://localhost:3000',
     'http://localhost:3001',
     'https://awful-gown-foal.cyclic.app',
+    'https://healthlink-gxhn.onrender.com'
 ];
 
 const whitelistUrls = whitelist;
