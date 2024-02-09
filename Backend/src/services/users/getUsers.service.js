@@ -62,7 +62,7 @@ class GetUsersService {
             query.specialty = specialty;
         }
 
-        const therapists = await User.find(query, 'first_name last_name specialty')
+        const therapists = await User.find(query, 'first_name last_name specialty country')
             .limit(limit)
             .skip((page - 1) * limit);
 
