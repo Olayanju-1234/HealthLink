@@ -1,4 +1,4 @@
-const {app} = require('./app');
+const { app } = require('./app');
 const { launchDB } = require('./config/db');
 const { createServer } = require('http');
 const { initSockets } = require('./sockets/index');
@@ -8,14 +8,9 @@ const server = createServer(app);
 initSockets(server);
 
 // Connect to database
-launchDB()
-    .then(() => {
-        // Start server
-        server.listen(process.env.PORT, () => {
-            console.log(`Server started on port ${process.env.PORT}`);
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-        process.exit(1);
+launchDB().then(() => {
+    // Start server
+    server.listen(process.env.PORT, () => {
+        console.log(`Server started on port ${process.env.PORT}`);
     });
+});
