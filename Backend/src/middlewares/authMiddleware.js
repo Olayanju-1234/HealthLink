@@ -48,7 +48,7 @@ const auth = async (req, res, next) => {
         return errorResponse(res, 401, 'Unauthorized');
     }
 
-    verify(token, process.env.JWT_SECRET, (err, user) => {
+    verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             if (err.name === 'TokenExpiredError') {
                 return errorResponse(res, 401, 'Token expired');
@@ -61,7 +61,7 @@ const auth = async (req, res, next) => {
             return errorResponse(res, 401, 'Unauthorized');
         }
 
-        req.user = user;
+        req.user = decoded;
         return next();
     });
 };

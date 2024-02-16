@@ -1,8 +1,8 @@
 const Chat = require('../../models/chat.model');
 
 const CreateChat = async (chatData) => {
-    if (!chatData) {
-        throw new Error('Chat data is required');
+    if (!chatData.content || !chatData.sender || !chatData.receiver) {
+        throw new Error('Please fill all necessary fields');
     }
 
     const newChat = await Chat.create(chatData);
