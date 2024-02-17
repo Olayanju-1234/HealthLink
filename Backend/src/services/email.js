@@ -29,10 +29,10 @@ const sendRegistrationMail = async (to, token) => {
 
             <p>${token}</p>
 
-          <p>Click <a href="http://localhost:3000/reset-password/${token}">here</a> to activate your account</p>
+          <p>Click <a href="https://healthlink-gxhn.onrender.com/api/auth/activate/token=${token}">here</a> to activate your account</p>
           <p>Or copy this link and paste it in your browser</p>
 
-            <p>http://localhost:3000/reset-password/${token}</p>
+            <p><a href="https://healthlink-gxhn.onrender.com/api/auth/activate/token=${token}"></a></p>
 
             <p>Regards, HealthLink</p>
       `;
@@ -40,4 +40,26 @@ const sendRegistrationMail = async (to, token) => {
     await sendEmail(to, subject, html_content);
   };
 
-module.exports = { sendEmail, sendRegistrationMail };
+  const sendResetPasswordMail = async (to, token) => {
+    const subject = 'Reset Password';
+  
+    const html_content = `
+          <h1>Reset your password</h1>    
+
+          <p>Here is your reset password token</p>
+
+            <p>${token}</p>
+
+          <p>Click <a href="https://healthlink-gxhn.onrender.com/api/auth/reset-password/${token}">here</a> to reset your password</p>
+          <p>Or copy this link and paste it in your browser</p>
+
+            <p>https/reset-password/${token}</p>
+
+            <p>Regards, HealthLink</p>
+      `;
+  
+    await sendEmail(to, subject, html_content);
+  }
+
+
+module.exports = { sendEmail, sendRegistrationMail, sendResetPasswordMail };
