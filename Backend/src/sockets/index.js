@@ -20,18 +20,18 @@ function handleChat(io) {
         socket.on('join_room', async (data) => {
             const { username, room } = data;
 
-                if (!username || !room) {
-                    return;
-                }
+            if (!username || !room) {
+                return;
+            }
 
-                socket.join(room);
-                console.log(`User ${username} joined room ${room}`);
+            socket.join(room);
+            console.log(`User ${username} joined room ${room}`);
 
-                socket.broadcast
-                    .to(room)
-                    .emit('chat_message', `Welcome to the chat, ${username}`);
+            socket.broadcast
+                .to(room)
+                .emit('chat_message', `Welcome to the chat, ${username}`);
 
-                socket.emit('chat_message', `Welcome to the chat, ${username}`);
+            socket.emit('chat_message', `Welcome to the chat, ${username}`);
         });
 
         // Chat
@@ -48,7 +48,13 @@ function handleChat(io) {
 const initSockets = (server) => {
     io = require('socket.io')(server, {
         cors: {
-            origin: whitelistUrls,
+            origin: [
+                'http://localhost:3000',
+                'http://localhost:3001',
+                'https://awful-gown-foal.cyclic.app',
+                'https://healthlink-gxhn.onrender.com',
+                ...whitelistUrls,
+            ],
         },
     });
 
