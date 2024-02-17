@@ -49,13 +49,7 @@ const initSockets = (server) => {
     console.log('Socket.io server started', whitelistUrls);
     io = require('socket.io')(server, {
         cors: {
-            origin: [
-                'http://localhost:3000',
-                'http://localhost:3001',
-                'https://awful-gown-foal.cyclic.app',
-                'https://healthlink-gxhn.onrender.com',
-                ...whitelistUrls,
-            ],
+            origin: whitelistUrls,
         },
     });
 
