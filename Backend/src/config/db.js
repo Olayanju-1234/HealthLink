@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+require('dotenv').config();
 const launchDB = async () => {
     let dbName = '';
 
