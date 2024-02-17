@@ -13,15 +13,10 @@ const app = express();
 let whitelist = [
     'http://localhost:3000',
     'http://localhost:3001',
-    'https://awful-gown-foal.cyclic.app',
     'https://healthlink-gxhn.onrender.com'
 ];
 
 const whitelistUrls = whitelist;
-
-if (process.env.NODE_ENV !== 'production') {
-    whitelist = [...whitelist, 'http://localhost:3000', 'http://localhost:3001'];
-}
 
 const corsOptions = {
     origin: (origin, callback) => {
