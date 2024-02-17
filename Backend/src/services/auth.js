@@ -1,7 +1,7 @@
 const { JWT_SECRET, JWT_EXPIRE } = require('../config/index');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
-const { sendRegistrationMail } = require('./email');
+const { sendRegistrationMail, sendResetPasswordMail } = require('./email');
 const {
     generateActivationToken,
     hashPassword,
@@ -107,6 +107,49 @@ class AuthService {
             expiresIn: JWT_EXPIRE,
         };
     }
+
+    async ForgotPassword(data) {
+        const user = await User.findOne({ email: data.email });
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const token = generateActivationToken();
+
+        user.passwordResetToken = token;
+
+        user.passwordResetTokenExpiration = Date.now() + 3600000;
+
+        await user.save();
+
+        await sendResetPasswordMail(data.email, token);
+
+        return user;
+    }
+
+    async resetPassword(token, password) {
+        const user = await User.findOne({
+            passwordResetToken: token,
+            passwordResetTokenExpiration: { $gt: Date.now() },
+        });
+
+        if (!user) {
+            throw new Error('Invalid or expired token');
+        }
+
+        user.password = hashPassword(password);
+
+        user.passwordResetToken = null;
+
+        user.passwordResetTokenExpiration = null;
+
+        await user.save();
+
+        return user;
+
+    }
+
 }
 
 module.exports = AuthService;

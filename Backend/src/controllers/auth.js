@@ -71,6 +71,44 @@ class AuthController {
             );
         }
     }
+
+    async forgotPassword(req, res) {
+        const { email } = req.body;
+
+        try {
+            await authService.ForgotPassword(email);
+            return successResponse(
+                res,
+                200,
+                'Password reset link sent to your email'
+            );
+        } catch (error) {
+            console.error(error);
+            return errorResponse(
+                res,
+                500,
+                error.message || 'Internal Server Error'
+            );
+        }
+    }
+
+    async resetPassword(req, res) {
+        const { token, password } = req.body;
+
+        try {
+            await authService.resetPassword(token, password);
+            return successResponse(res, 200, 'Password reset successfully');
+        } catch (error) {
+            console.error(error);
+            return errorResponse(
+                res,
+                500,
+                error.message || 'Internal Server Error'
+            );
+        }
+    }
+
+
 }
 
 module.exports = AuthController;
