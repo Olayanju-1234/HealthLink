@@ -48,7 +48,13 @@ function handleChat(io) {
 const initSockets = (server) => {
     io = require('socket.io')(server, {
         cors: {
-            origin: '*',
+            origin: [
+                'http://localhost:3000',
+                'http://localhost:3001',
+                'https://awful-gown-foal.cyclic.app',
+                'https://healthlink-gxhn.onrender.com',
+                ...whitelistUrls,
+            ],
         },
     });
 

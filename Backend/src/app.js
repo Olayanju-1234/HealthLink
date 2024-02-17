@@ -24,7 +24,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const corsOptions = {
-    origin: '*',
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback('Not allowed by CORS', false);
+        }
+    },
 };
 
 app.use(cors(corsOptions));
