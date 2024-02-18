@@ -1,26 +1,36 @@
-const sequelize = require('sequelize');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-const connectDB = new sequelize(
-    process.env.DATABASE_NAME,
-    process.env.DATABASE_USERNAME,
-    process.env.DATABASE_PASSWORD,
-    {
-        host: process.env.DATABASE_HOST,
-        dialect: 'mysql',
-    }
-);
-
+const mongoose = require('mongoose');
+require('dotenv').config();
 const launchDB = async () => {
-    try {
-        await connectDB.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-        process.exit(1);
-    }
-};
+    let dbName = '';
 
-module.exports = launchDB;
+    switch (process.env.NODE_ENV) {
+        case 'development':
+            dbName = process.env.DATABASE_NAME_DEV;
+            break;
+        case 'production':
+            dbName = process.env.DATABASE_NAME_PROD;
+            break;
+        case 'test':
+            dbName = process.env.DATABASE_NAME_TEST;
+            break;
+        default:
+            dbName = process.env.DATABASE_NAME_DEV;
+    }
+
+    mongoose.connect(process.env.DATABASE_URL, {dbName});
+
+    const db = mongoose.connection;
+
+    db.on('connected', () => {
+        console.log(`Mongoose connected to ${dbName} database`);
+    });
+
+    db.on('error', console.error.bind(console, 'connection error:'));
+
+    db.on('disconnected', () => {
+        console.log(`Mongoose disconnected from ${dbName} database`);
+    }
+    );
+}
+
+module.exports = { launchDB };
