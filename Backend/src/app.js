@@ -14,7 +14,7 @@ let whitelist = '*';
 
 const whitelistUrls = whitelist;
 
-if (NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
     whitelist = [...whitelist, 'http://localhost:3000', 'http://localhost:3001'];
 }
 
