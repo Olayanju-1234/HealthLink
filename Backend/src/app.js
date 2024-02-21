@@ -9,23 +9,30 @@ const { ChatRouter } = require('./routes/chat.routes');
 
 const app = express();
 
-// ** CORS **
-let whitelist = '*';
+// **Secure and Flexible CORS Configuration:**
+const productionWhitelist = [
+  // Replace with your actual production frontend URL(s)
+  'https://your-production-frontend.com',
+];
 
-const whitelistUrls = whitelist;
+const developmentWhitelist = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+];
 
-if (process.env.NODE_ENV === 'development') {
-    whitelist = [...whitelist, 'http://localhost:3000', 'http://localhost:3001'];
-}
+const whitelistOrigins = process.env.NODE_ENV === 'production'
+  ? productionWhitelist
+  : developmentWhitelist;
 
 const corsOptions = {
-    origin: (origin, callback) => {
-        if (whitelist.indexOf(origin) !== -1 || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
+  origin: (origin, callback) => {
+    if (whitelistOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
+  },
+  credentials: true, // Allow cookies for authentication
 };
 
 app.use(cors(corsOptions));
@@ -42,9 +49,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get('/', (req, res) => {
-    return res.status(200).send({
-        message: 'Welcome to the API',
-    });
+  return res.status(200).send({
+    message: 'Welcome to the API',
+  });
 });
 
 app.use('/api/auth', AuthRouter);
@@ -54,9 +61,9 @@ app.use('/api/chat', ChatRouter);
 
 // Unknown routes
 app.use((req, res) => {
-    return res.status(404).send({
-        message: 'Route' + req.url + ' Not found.',
-    });
+  return res.status(404).send({
+    message: 'Route' + req.url + ' Not found.',
+  });
 });
 
-module.exports = { app, whitelistUrls};
+module.exports = { app, whitelistOrigins }; // Export whitelist
