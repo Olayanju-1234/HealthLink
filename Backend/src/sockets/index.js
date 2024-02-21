@@ -50,6 +50,7 @@ const initSockets = (server) => {
     cors: {
       origin: whitelistOrigins,
     },
+    transports: ['websocket', 'polling'],
   });
 
   handleChat(io);
