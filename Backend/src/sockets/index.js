@@ -48,7 +48,7 @@ function handleChat(io) {
 const initSockets = (server) => {
     io = require('socket.io')(server, {
         cors: {
-            origin: '*',
+            origin: whitelistUrls,
         },
     });
 

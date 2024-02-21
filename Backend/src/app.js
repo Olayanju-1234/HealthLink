@@ -10,16 +10,22 @@ const { ChatRouter } = require('./routes/chat.routes');
 const app = express();
 
 // ** CORS **
-let whitelist = [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://healthlink-gxhn.onrender.com'
-];
+let whitelist = '*';
 
 const whitelistUrls = whitelist;
 
+if (NODE_ENV === 'development') {
+    whitelist = [...whitelist, 'http://localhost:3000', 'http://localhost:3001'];
+}
+
 const corsOptions = {
-    origin: '*',
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
 };
 
 app.use(cors(corsOptions));
