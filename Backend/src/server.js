@@ -5,6 +5,7 @@ const { initSockets } = require('./sockets/index');
 
 const server = createServer(app);
 
+console.log('Initializing Socket.io');
 initSockets(server);
 
 // Connect to database

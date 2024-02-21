@@ -5,6 +5,7 @@ let io;
 const onlineUsers = new Map();
 
 function handleChat(io) {
+    console.log('Handling chat');
   io.on('connection', (socket) => {
     console.log(`A user ${socket.id} connected`);
 
@@ -46,6 +47,7 @@ function handleChat(io) {
 }
 
 const initSockets = (server) => {
+    console.log('Initializing Socket.io');
   io = require('socket.io')(server, {
     cors: {
       origin: whitelistOrigins,
@@ -53,6 +55,7 @@ const initSockets = (server) => {
     transports: ['websocket', 'polling'],
   });
 
+  console.log('Socket.io initialized');
   handleChat(io);
 };
 

@@ -35,6 +35,7 @@ const corsOptions = {
   credentials: true, // Allow cookies for authentication
 };
 
+console.log('CORS whitelist:',);
 app.use(cors(corsOptions));
 
 // morgan
