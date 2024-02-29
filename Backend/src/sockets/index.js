@@ -1,5 +1,6 @@
 const { whitelistOrigins } = require('../app'); // Import whitelist
 const chatEvent = require('./chat');
+const socketIO = require('socket.io');
 
 let io;
 const onlineUsers = new Map();
@@ -47,16 +48,13 @@ function handleChat(io) {
 }
 
 const initSockets = (server) => {
-    console.log('Initializing Socket.io');
-  io = require('socket.io')(server, {
+  io = socketIO(server, {
     cors: {
-      origin: whitelistOrigins,
+      origin: '*',
     },
-    transports: ['websocket', 'polling'],
   });
-
-  console.log('Socket.io initialized');
-  handleChat(io);
+  
+   handleChat(io);
 };
 
 const getSockets = () => io;

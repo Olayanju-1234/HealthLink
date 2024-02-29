@@ -1,11 +1,11 @@
-const { app } = require('./app');
+const app = require('./app');
 const { launchDB } = require('./config/db');
 const { createServer } = require('http');
 const { initSockets } = require('./sockets/index');
 
 const server = createServer(app);
 
-console.log('Initializing Socket.io');
+console.log('Initializing Socket.io server');
 initSockets(server);
 
 // Connect to database

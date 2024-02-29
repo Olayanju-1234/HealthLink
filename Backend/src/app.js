@@ -10,33 +10,29 @@ const { ChatRouter } = require('./routes/chat.routes');
 const app = express();
 
 // **Secure and Flexible CORS Configuration:**
-const productionWhitelist = [
-  // Replace with your actual production frontend URL(s)
-  'https://your-production-frontend.com',
-];
+// const productionWhitelist = ['*', 'you']; // Replace with your domain
 
-const developmentWhitelist = [
-  'http://localhost:3000',
-  'http://localhost:3001',
-];
+// const developmentWhitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:3003'];
 
-const whitelistOrigins = process.env.NODE_ENV === 'production'
-  ? productionWhitelist
-  : developmentWhitelist;
+// const whitelistOrigins = process.env.NODE_ENV === 'production'
+//   ? productionWhitelist
+//   : developmentWhitelist;
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelistOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, // Allow cookies for authentication
-};
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (whitelistOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//       console.log(whitelistOrigins.indexOf(origin) !== -1 ? 'Whitelist origin' : 'No origin');
+//       console.log('CORS allowed:', origin);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//       console.log('CORS error:', origin);
+//     }
+//   },
+//   credentials: true, // Allow cookies for authentication
+// };
 
-console.log('CORS whitelist:', whitelistOrigins);
-app.use(cors(corsOptions));
+app.use(cors());
 
 // morgan
 app.use(morgan('dev'));
@@ -67,4 +63,4 @@ app.use((req, res) => {
   });
 });
 
-module.exports = { app, whitelistOrigins }; // Export whitelist
+module.exports = app; // Export whitelist
