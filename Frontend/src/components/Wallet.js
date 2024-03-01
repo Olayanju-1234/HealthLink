@@ -4,7 +4,6 @@ import image from '../assets/Vector.png';
 import image1 from '../assets/Rect5.png';
 import image2 from '../assets/history.png';
 import image3 from '../assets/history2.png';
-// import image4 from '../assets/history3.png';
 import image5 from '../assets/rectangle5.png';
 import image6 from '../assets/rectangle66.png';
 import image7 from '../assets/rect7.png';

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../style/therapist.css';
 import image from '../assets/Rect.png';
-import Update from '../hooks/Update';
+
 
 
 
