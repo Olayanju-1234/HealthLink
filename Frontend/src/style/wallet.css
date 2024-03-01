@@ -1,0 +1,322 @@
+.wallet{
+    background-color: #0D5D56;
+    display:flex;
+    margin: auto;
+    width:50em;
+    height:43.75em;
+    border-radius: 0.75em;
+}
+.wallet h1{
+    padding: 10px 0 10px 0;
+    color: #fff;
+    font-family: "Inria Sans";
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    position:absolute;
+    margin:18px 0 6px 140px;
+    
+    
+}
+.wallet p{
+    position:absolute;
+    color:#0D5D56;
+    top:125px;
+    left:65px;
+    font-weight: 500;
+    font-size: 20px;
+    font-family: "Inria Sans";
+}
+.wallet .balance{
+    position:absolute;
+    color:#0D5D56;
+    left:270px;
+    font-size: 20px;
+    top:60px;
+    font-weight: 600;
+}
+.wallet .balance-amount{
+    position:absolute;
+    color:#0D5D56;
+    left:260px;
+    top:100px;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.wallet .profile-link{
+    position:absolute;
+    left:410px;
+    top:22px;
+    color:#0D5D56;
+    font-weight: 600;
+    font-size:20px;
+    
+}
+#rectangle5{
+    position: absolute;
+    width:80px;
+    height:40px;
+    left:400px;
+    top:20px;
+}
+#rectangle6{
+    position: absolute;
+    width:80px;
+    height:40px;
+    right:400px;
+    top:20px;
+}
+.wallet .back-link{
+    position:absolute;
+    right:420px;
+    top:22px;
+    color:#0D5D56;
+    font-weight: 600;
+    font-size:20px;
+}
+#rectangle7{
+    position: absolute;
+    width:140px;
+    height:40px;
+    left:25em;
+    bottom:10px;
+}
+.wallet .session{
+    position:absolute;
+    left:20.5em;
+    bottom:17px;
+    color:#0D5D56;
+    font-weight: 600;
+    font-size:20px;
+}
+ #rectangle8{
+    position: absolute;
+    width:120px;
+    height:40px;
+    right:46%;
+    bottom:10px;
+ }
+ .wallet .chat{
+    position:absolute;
+    right:47%;
+    bottom:20px;
+    color:#0D5D56;
+    font-weight: 600;
+    font-size:20px;
+ }
+ #rectangle9{
+    position: absolute;
+    width:120px;
+    height:40px;
+    right:400px;
+    bottom:10px;
+ }
+ .wallet .therapist{
+    position:absolute;
+    right:420px;
+    bottom:22px;
+    color:#0D5D56;
+    font-weight: 600;
+    font-size:20px;
+ }
+.wallet-container{
+    width:600px;
+    background-color: #fff;
+    height:200px;
+    border-radius:12px;
+    position: relative; 
+    top: 11%;
+    left: 12%;
+
+    
+}
+.wallet #wallet-icon{
+    width:60px;
+    height:50px;
+    position: relative;
+    top: 38%;
+    left: 85px;
+  
+}
+.wallet #rect{
+    position: absolute;
+    top: 60px;
+    left: 65px;
+    width: 100px;
+    height: 80px;
+    
+}
+.wallet button{
+    position:relative; 
+    width:90px;
+    height:80px;
+    background-color: #0D5D56;
+    float:right;
+    top:60px;
+    right:40px;
+    color:#fff;
+    border-radius: 14px;
+    font-size:22px;
+
+}
+#title{
+    font-size:32px;
+    color:#000;
+    text-align:start;
+    margin-left:15%;
+    margin-top:2%;
+}
+.history{
+    background-color: #0D5D56;
+    width:100%;
+    height:40%;
+    position:absolute;
+    top:300px;
+}
+.history-container{
+    background-color: transparent;
+    width:100%;
+    height:50px;
+    border-radius: 12px;
+}
+.history .dr-name{
+    position:absolute;
+    top:0;
+    color:black;
+    font-size: 22px;
+}
+#history, #history2, #history3{
+    width:100%;
+    height:fit-content;
+    margin-bottom:10px;
+}
+
+@media only screen and (max-width: 760px){
+    .wallet{
+        background-color: #0D5D56;
+        display:block;
+        margin:10px 10px 10px 10px;
+        width:100%;
+        height:600px;
+        border-radius: 12px;
+        overflow-x: hidden;
+        padding:auto;
+       
+    }
+    .wallet h1{
+        padding: 10px 0 10px 0;
+        color: #fff;
+        font-family: "Inria Sans";
+        font-size: 23px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        display: flex;
+        justify-content: center;
+        position:absolute;
+        margin:18px 0 6px 140px;
+        
+        
+    }
+    .wallet p{
+        position:absolute;
+        color:#0D5D56;
+        top:125px;
+        left:80px;
+        font-weight: 500;
+        font-size: 20px;
+        font-family: "Inria Sans";
+    }
+    .wallet-container{
+        width:80%;
+        background-color: #fff;
+        height:200px;
+        border-radius:12px;
+        /* position: relative;  */
+        display: block;
+        align-items: center;
+        margin-right:10%;
+    
+        
+    }
+    .wallet #wallet-icon{
+        width:60px;
+        height:50px;
+        position: relative;
+        top: 38%;
+        left: 85px;
+      
+    }
+    .wallet #rect{
+        position: absolute;
+        top: 60px;
+        left: 65px;
+        width: 100px;
+        height: 80px;
+        
+    }
+    .wallet button{
+        position:relative; 
+        width:90px;
+        height:80px;
+        background-color: #0D5D56;
+        float:right;
+        top:60px;
+        right:40px;
+        color:#fff;
+        border-radius: 14px;
+        font-size:22px;
+    
+    }
+    #title{
+        font-size:32px;
+        color:#000;
+        text-align:start;
+        margin-left:15%;
+        margin-top:2%;
+    }
+    .history{
+        background-color: #0D5D56;
+        width:100%;
+        height:40%;
+        position:absolute;
+        top:300px;
+    }
+    .history-container{
+        background-color: transparent;
+        width:100%;
+        height:50px;
+        border-radius: 12px;
+    }
+    .history .dr-name{
+        position:absolute;
+        top:0;
+        color:black;
+        font-size: 22px;
+    }
+    #history, #history2, #history3{
+        width:100%;
+        height:fit-content;
+        margin-bottom:10px;
+    }
+    .wallet .balance{
+        position:absolute;
+        color:#0D5D56;
+        left:210px;
+        font-size: 20px;
+        top:60px;
+        font-weight: 600;
+    }
+    .wallet .balance-amount{
+        position:absolute;
+        color:#0D5D56;
+        left:210px;
+        top:100px;
+        font-weight: 600;
+        font-size: 24px;
+    }
+}
